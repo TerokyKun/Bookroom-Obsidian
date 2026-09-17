@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="ru" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0d0e13" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <title>Bookroom × Obsidian</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <div class="ambient ambient-a"></div>
+  <div class="ambient ambient-b"></div>
+  <div class="noise"></div>
+
+  <main class="shell">
+    <header class="topbar">
+      <div class="brand">
+        <div class="eyebrow" data-i18n="eyebrow">PERSONAL LIBRARY</div>
+        <h1 id="brandTitle">Bookroom <span>× Obsidian</span></h1>
+      </div>
+      <div class="top-actions">
+        <button class="soft-button icon-button-lg" id="themeBtn" type="button" title="Сменить тему" aria-label="Сменить тему"><svg class="icon"><use href="#i-sun"></use></svg></button>
+        <button class="soft-button language-button" id="languageBtn" type="button">RU</button>
+        <button class="soft-button" id="refreshBtn" type="button"><svg class="icon"><use href="#i-refresh"></use></svg><span data-i18n="refresh">Обновить</span></button>
+      </div>
+    </header>
+
+    <nav class="view-tabs panel" aria-label="Sections">
+      <button class="view-tab active" id="libraryTab" type="button" data-i18n="libraryTab">Библиотека</button>
+      <button class="view-tab" id="achievementsTab" type="button" data-i18n="achievementsTab">Достижения</button>
+    </nav>
+
+    <section id="libraryView">
+    <section class="hero-panel">
+      <div class="hero-copy">
+        <span class="hero-kicker" data-i18n="heroKicker">READ. TRACK. LEVEL UP.</span>
+        <h2 id="greetingTitle">Моя библиотека</h2>
+        <p data-i18n="heroText">Каждая книга превращается в маленький квест: читаешь, двигаешь прогресс, открываешь достижения.</p>
+      </div>
+      <div class="hero-ring" aria-hidden="true"><span id="heroAvg">0%</span><small data-i18n="average">средний прогресс</small></div>
+    </section>
+
+    <section class="stats-grid">
+      <article class="stat-card"><div class="stat-icon"><svg class="icon"><use href="#i-book"></use></svg></div><div class="stat-label" data-i18n="books">Книги</div><div class="stat-value" id="statBooks">0</div></article>
+      <article class="stat-card"><div class="stat-icon"><svg class="icon"><use href="#i-loader"></use></svg></div><div class="stat-label" data-i18n="reading">Читаю</div><div class="stat-value" id="statReading">0</div></article>
+      <article class="stat-card"><div class="stat-icon"><svg class="icon"><use href="#i-check"></use></svg></div><div class="stat-label" data-i18n="completed">Прочитано</div><div class="stat-value" id="statCompleted">0</div></article>
+      <article class="stat-card"><div class="stat-icon"><svg class="icon"><use href="#i-pages"></use></svg></div><div class="stat-label" data-i18n="pagesRead">Пройдено страниц</div><div class="stat-value" id="statPages">0</div></article>
+      <article class="stat-card wide"><div class="stat-label" data-i18n="averageProgress">Средний прогресс</div><div class="stat-value"><span id="statAvg">0</span>%</div><div class="mini-progress"><span id="avgBar"></span></div></article>
+    </section>
+
+    <section class="toolbar panel">
+      <div class="search-wrap"><svg class="icon"><use href="#i-search"></use></svg><input id="search" data-i18n-placeholder="searchPlaceholder" placeholder="Поиск по книгам, авторам и тегам…" /></div>
+      <div class="toolbar-row">
+        <div class="filters" id="filters">
+          <button class="filter active" data-filter="all" type="button" data-i18n="all">Все</button>
+          <button class="filter" data-filter="reading" type="button" data-i18n="reading">Читаю</button>
+          <button class="filter" data-filter="planned" type="button" data-i18n="planned">В планах</button>
+          <button class="filter" data-filter="completed" type="button" data-i18n="completed">Готово</button>
+        </div>
+        <div class="selects">
+          <label class="select-wrap"><svg class="icon"><use href="#i-sort"></use></svg><select id="sortSelect"></select></label>
+          <label class="select-wrap"><svg class="icon"><use href="#i-folder"></use></svg><select id="folderSelect"></select></label>
+          <label class="select-wrap"><svg class="icon"><use href="#i-tag"></use></svg><select id="tagSelect"></select></label>
+        </div>
+        <div class="toolbar-actions"><button class="soft-button" id="multiImportBtn" type="button"><svg class="icon"><use href="#i-upload"></use></svg><span data-i18n="multiImport">Импортировать несколько PDF</span></button><button class="primary-button" id="addBtn" type="button"><svg class="icon"><use href="#i-plus"></use></svg><span data-i18n="addBook">Добавить книгу</span></button></div>
+      </div>
+    </section>
+
+    <section class="collections-panel panel">
+      <div class="section-title collection-head"><div><span data-i18n="collections">Коллекции</span><small data-i18n="collectionsHint">Отдельно от добавления книги · как плейлисты</small></div><button class="soft-button" id="newFolderBtn" type="button"><svg class="icon"><use href="#i-plus"></use></svg><span data-i18n="newCollection">Новая коллекция</span></button></div>
+      <div id="folderBar" class="folder-bar"></div>
+    </section>
+
+    <section>
+      <div class="section-title"><div><span data-i18n="myLibrary">Моя библиотека</span><small id="bookCountLabel">0 книг</small></div></div>
+      <div id="bulkToolbar" class="bulk-toolbar panel hidden"><div class="bulk-info"><strong id="selectedCount">Выбрано: 0</strong><button class="ghost-button" id="selectAllVisible" type="button" data-i18n="selectVisible">Выбрать показанные</button><button class="ghost-button" id="clearSelection" type="button" data-i18n="clearSelection">Снять выбор</button></div><div class="bulk-actions"><button class="soft-button" id="bulkCollectionsBtn" type="button"><svg class="icon"><use href="#i-folder"></use></svg><span data-i18n="bulkCollections">В коллекции</span></button><button class="danger-button" id="bulkDeleteBtn" type="button"><svg class="icon"><use href="#i-trash"></use></svg><span data-i18n="bulkDelete">Удалить выбранные</span></button></div></div><div id="books" class="books-grid"></div>
+      <div id="empty" class="empty-state hidden">
+        <div class="empty-icon"><svg class="icon"><use href="#i-book-open"></use></svg></div>
+        <h2 data-i18n="emptyTitle">Библиотека пока пуста</h2>
+        <p data-i18n="emptyText">Добавь первую книгу или сразу выбери PDF.</p>
+        <button class="primary-button" id="emptyAddBtn" type="button"><svg class="icon"><use href="#i-plus"></use></svg><span data-i18n="addBook">Добавить книгу</span></button>
+      </div>
+    </section>
+    </section>
+
+    <section id="readerView" class="reader-view page-view hidden">
+      <div class="reader-shell panel">
+        <div class="reader-head"><div><div class="eyebrow" id="readerEyebrow" data-i18n="reader">ЧИТАЛКА</div><h2 id="readerTitle"></h2></div><button class="soft-button" id="closeReader" type="button"><svg class="icon"><use href="#i-x"></use></svg><span data-i18n="closeReader">Закрыть</span></button></div>
+        <div class="pdf-reader"><iframe id="pdfFrame" title="PDF"></iframe></div>
+      </div>
+    </section>
+
+    <section id="achievementsView" class="page-view hidden">
+      <div class="achievement-page panel">
+        <div class="section-title"><div><span data-i18n="achievements">Достижения</span><small data-i18n="achievementsHint">автоматически записываются в Obsidian</small></div></div>
+        <div id="achievements" class="achievements"></div>
+      </div>
+    </section>
+  </main>
+
+  <dialog id="addDialog" class="modal">
+    <form id="bookForm" method="dialog" enctype="multipart/form-data">
+      <div class="modal-head"><div><div class="eyebrow" id="bookDialogEyebrow" data-i18n="newBookEyebrow">NEW BOOK</div><h2 id="bookDialogTitle" data-i18n="addBookTitle">Добавить книгу</h2></div><button type="button" class="icon-button" id="closeDialog" aria-label="Close"><svg class="icon"><use href="#i-x"></use></svg></button></div>
+      <label><span class="field-label" data-i18n="titleLabel">Название</span><input name="title" id="titleInput" required data-i18n-placeholder="titlePlaceholder" placeholder="Например, Sapiens" /></label>
+      <label><span class="field-label" data-i18n="authorLabel">Автор</span><input name="author" id="authorInput" data-i18n-placeholder="authorPlaceholder" placeholder="Автор книги" /></label>
+      <div class="edit-metrics"><label><span class="field-label" data-i18n="pagesLabel">Всего страниц</span><input id="pagesInput" type="number" min="0" /></label><label><span class="field-label" data-i18n="currentPageLabel">Текущая страница</span><input id="currentPageInput" type="number" min="0" /></label></div>
+      <div class="field-block">
+        <div class="field-heading"><span data-i18n="tagsLabel">Теги</span><span class="field-hint" data-i18n="tagsHint">выбери несколько</span></div>
+        <div class="tag-picker" id="tagPicker"></div>
+        <input class="custom-tag-input" id="customTagInput" data-i18n-placeholder="customTagPlaceholder" placeholder="свой тег: например, rust" />
+      </div>
+
+      <label class="dropzone" id="dropzone">
+        <span class="drop-icon"><svg class="icon icon-lg"><use href="#i-upload"></use></svg></span>
+        <strong id="fileLabel" data-i18n="attachPdf">Прикрепить PDF</strong>
+        <small data-i18n="pdfHint">Первая страница станет обложкой · до 150 МБ</small>
+        <input name="pdf" id="pdfInput" type="file" accept="application/pdf,.pdf" />
+      </label>
+
+      <div class="modal-actions"><button type="button" class="danger-button hidden" id="dialogDeleteBtn"><svg class="icon"><use href="#i-trash"></use></svg><span data-i18n="deleteBook">Удалить книгу</span></button><span class="modal-spacer"></span><button type="button" class="ghost-button" id="cancelDialog" data-i18n="cancel">Отмена</button><button class="primary-button" id="saveBtn" type="submit"><svg class="icon"><use href="#i-save"></use></svg><span data-i18n="save">Сохранить</span></button></div>
+      <div id="formError" class="form-error hidden"></div>
+    </form>
+  </dialog>
+
+  <dialog id="folderDialog" class="modal folder-dialog">
+    <form id="folderForm" method="dialog">
+      <div class="modal-head"><div><div class="eyebrow" data-i18n="collectionEyebrow">COLLECTION</div><h2 data-i18n="newCollectionTitle">Новая коллекция</h2></div><button type="button" class="icon-button" id="closeFolderDialog" aria-label="Close"><svg class="icon"><use href="#i-x"></use></svg></button></div>
+      <label><span class="field-label" data-i18n="collectionName">Название коллекции</span><input id="newFolderInput" required data-i18n-placeholder="collectionPlaceholder" placeholder="Например, Что читаю сейчас" /></label>
+      <div class="modal-actions"><button type="button" class="ghost-button" id="cancelFolderDialog" data-i18n="cancel">Отмена</button><button class="primary-button" type="submit"><svg class="icon"><use href="#i-folder"></use></svg><span data-i18n="createCollection">Создать</span></button></div>
+      <div id="folderError" class="form-error hidden"></div>
+    </form>
+  </dialog>
+
+  <dialog id="addToFolderDialog" class="modal folder-dialog">
+    <form id="addToFolderForm" method="dialog">
+      <div class="modal-head"><div><div class="eyebrow" data-i18n="moveBookEyebrow">MOVE BOOK</div><h2 data-i18n="addToCollectionTitle">Добавить в коллекцию</h2></div><button type="button" class="icon-button" id="closeAddToFolderDialog" aria-label="Close"><svg class="icon"><use href="#i-x"></use></svg></button></div>
+      <p class="dialog-book-name" id="addToFolderBookName"></p>
+      <div id="folderChoices" class="folder-choices"></div>
+      <div class="modal-actions"><button type="button" class="ghost-button" id="cancelAddToFolderDialog" data-i18n="cancel">Отмена</button><button class="primary-button" type="submit"><svg class="icon"><use href="#i-folder"></use></svg><span data-i18n="addToCollection">Добавить</span></button></div>
+      <div id="addToFolderError" class="form-error hidden"></div>
+    </form>
+  </dialog>
+
+  <template id="bookTemplate">
+    <article class="book-card">
+      <div class="card-glow"></div>
+      <div class="cover-wrap">
+        <canvas class="cover"></canvas>
+        <div class="cover-empty"><div class="default-cover" aria-hidden="true"><svg class="default-book-svg" viewBox="0 0 120 170"><path d="M20 20h72a8 8 0 0 1 8 8v114a8 8 0 0 1-8 8H28a8 8 0 0 0-8 8V28a8 8 0 0 1 8-8Z"/><path d="M20 154c2-7 8-11 16-11h64"/><path d="M39 55h44M39 72h44M39 89h31"/></svg><span>BOOKROOM</span></div></div>
+        <div class="cover-sheen"></div>
+      </div>
+      <div class="book-body">
+        <div class="book-top"><label class="book-select-wrap"><input class="book-select" type="checkbox" /><span></span></label><span class="status-pill"></span><button class="icon-button pdf-action" type="button"></button></div>
+        <h3 class="book-title"></h3>
+        <p class="book-author"></p>
+        <div class="tag-list"></div>
+        <div class="progress-row"><span data-i18n="progress">Прогресс</span><strong class="progress-number">0%</strong></div>
+        <div class="progress"><span class="progress-fill"></span></div>
+        <div class="page-row"><label><span data-i18n="page">Страница</span><input class="page-input" type="number" min="0" /></label><span class="page-total"></span></div>
+        <div class="card-actions"><button class="soft-button folder-button" type="button"></button><button class="ghost-button open-pdf" type="button"><svg class="icon"><use href="#i-pdf"></use></svg><span></span></button><button class="danger-button delete-button" type="button"></button></div>
+      </div>
+    </article>
+  </template>
+
+  <svg class="icon-sprite" aria-hidden="true">
+    <symbol id="i-book" viewBox="0 0 24 24"><path d="M5 4.5A2.5 2.5 0 0 1 7.5 2H20v17H7.5A2.5 2.5 0 0 0 5 21.5v-17Z"/><path d="M5 4.5v17M8.5 6H17M8.5 10H17M8.5 14H14"/></symbol>
+    <symbol id="i-book-open" viewBox="0 0 24 24"><path d="M3.5 5.5C7 4 9.5 4.3 12 6v14c-2.5-1.7-5-2-8.5-.5v-14Z"/><path d="M20.5 5.5C17 4 14.5 4.3 12 6v14c2.5-1.7 5-2 8.5-.5v-14Z"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.8" cy="10.8" r="6.3"/><path d="m16 16 5 5"/></symbol>
+    <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 11a8.5 8.5 0 0 0-14.3-4L4 9"/><path d="M4 5v4h4M4 13a8.5 8.5 0 0 0 14.3 4L20 15"/><path d="M20 19v-4h-4"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.65 17.65l1.42 1.42M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.65 6.35l1.42-1.42"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 15.5A8.5 8.5 0 0 1 8.5 4 8.5 8.5 0 1 0 20 15.5Z"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
+    <symbol id="i-save" viewBox="0 0 24 24"><path d="M5 3h12l2 2v16H5V3Z"/><path d="M8 3v6h8V3M8 21v-8h8v8"/></symbol>
+    <symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 16V4M7.5 8.5 12 4l4.5 4.5M5 14v6h14v-6"/></symbol>
+    <symbol id="i-pdf" viewBox="0 0 24 24"><path d="M6 3h8l4 4v14H6V3Z"/><path d="M14 3v5h5M8.5 15.5h2a1.5 1.5 0 0 0 0-3h-2v5M13.5 17.5v-5h2.5M13.5 15h2"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.5 4.2 4.2L19 7"/></symbol>
+    <symbol id="i-loader" viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 9 9"/></symbol>
+    <symbol id="i-pages" viewBox="0 0 24 24"><path d="M5 4h12v16H5zM8 8h6M8 12h6M8 16h4"/></symbol>
+    <symbol id="i-sort" viewBox="0 0 24 24"><path d="M8 5v14M5 8l3-3 3 3M16 19V5M13 16l3 3 3-3"/></symbol>
+    <symbol id="i-folder" viewBox="0 0 24 24"><path d="M3 6h7l2 2h9v11H3V6Z"/></symbol>
+    <symbol id="i-tag" viewBox="0 0 24 24"><path d="M4 5v6l10 10 6-6L10 5H4Z"/><circle cx="8" cy="9" r="1"/></symbol>
+    <symbol id="i-network" viewBox="0 0 24 24"><circle cx="5" cy="12" r="2.2"/><circle cx="19" cy="6" r="2.2"/><circle cx="19" cy="18" r="2.2"/><path d="m7 11 10-4M7 13l10 4"/></symbol>
+    <symbol id="i-link" viewBox="0 0 24 24"><path d="M9 15l-2 2a3.5 3.5 0 0 1-5-5l3-3a3.5 3.5 0 0 1 5 0"/><path d="m15 9 2-2a3.5 3.5 0 0 1 5 5l-3 3a3.5 3.5 0 0 1-5 0"/><path d="m8.5 15.5 7-7"/></symbol>
+    <symbol id="i-trash" viewBox="0 0 24 24"><path d="M4 7h16M9 7V4h6v3M7 7l1 13h8l1-13M10 11v5M14 11v5"/></symbol>
+  </svg>
+
+  <script src="/vendor/pdfjs/pdf.min.mjs" type="module" id="pdfjs-module"></script>
+  <script type="module" src="/app.js"></script>
+</body>
+</html>

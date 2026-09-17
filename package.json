@@ -1,0 +1,16 @@
+{
+  "name": "obsidian-book-dashboard",
+  "version": "2.7.1",
+  "private": true,
+  "description": "Bookroom dashboard for Obsidian with playlist collections, live progress, embedded PDF reader, localized gamification, multi-select bulk actions and multi-PDF import.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.6.1",
+    "express": "^5.1.0",
+    "multer": "^2.0.2",
+    "pdfjs-dist": "4.10.38"
+  }
+}

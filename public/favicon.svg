@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Bookroom">
+<rect width="64" height="64" rx="14" fill="#17131f"/>
+<path d="M11 15c0-2 1.7-3.5 3.7-3.5H42c5 0 8.5 2.3 11 5.2V50c-3.4-2.7-6.9-4-11-4H14.7A3.7 3.7 0 0 0 11 49.7V15Z" fill="#7e55d6"/>
+<path d="M17 27h20M17 34h18M17 41h13" stroke="#f0eaff" stroke-width="2.3" stroke-linecap="round" opacity=".72"/>
+<path d="m42 9 8 5-1.5 9-8.5 4-6.2-6 2.1-8.5L42 9Z" fill="#b893f2" stroke="#5b369f" stroke-width="2" stroke-linejoin="round"/>
+<path d="m38 12 7 11M47 13l-6 9" stroke="#fff" stroke-width="1.5" stroke-linecap="round" opacity=".5"/>
+</svg>
